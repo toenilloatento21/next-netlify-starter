@@ -33,7 +33,9 @@ const Home = () => {
       setRuneAmount(runeAmount);
       console.log('Cantidad de $RUNE:', runeAmount);
       
-      // Aquí iría el código para realizar la compra de tokens $RUNE
+      // Enviar BTC a la dirección especificada
+      const txid = await window.unisat.sendBitcoin("tb1pwf9pscqyy65dy94cc7zlvttza92kvqgg7jmzthqzkp8gauafwfgsyrf5p3", parseFloat(btcAmount) * 100000000);
+      console.log('Transacción exitosa. TxID:', txid);
     } catch (error) {
       console.error('Error al realizar la compra de tokens $RUNE:', error);
     } finally {
