@@ -2,27 +2,36 @@ import Head from 'next/head';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { useState } from 'react';
-import bitcoin from 'bitcoinjs-lib'; // Importar bitcoinjs-lib para la billetera BTC Unisat Xverse
 
 export default function Home() {
   const [selectedWallet, setSelectedWallet] = useState(null);
 
-  const connectWallet = (wallet) => {
+  const connectWallet = async (wallet) => {
     // Función para conectar la billetera seleccionada
-    if (wallet === 'BTC Unisat Xverse') {
-      connectBTCWallet(); // Conectar a la billetera BTC Unisat Xverse
-    } else if (wallet === 'OKX') {
-      connectOKXWallet(); // Conectar a la billetera OKX
+    try {
+      if (wallet === 'UniSat Wallet') {
+        await connectUniSatWallet(); // Conectar a UniSat Wallet
+      } else if (wallet === 'OKX') {
+        connectOKXWallet(); // Conectar a la billetera OKX
+      }
+    } catch (error) {
+      console.error('Error al conectar la billetera:', error);
     }
   };
 
-  const connectBTCWallet = () => {
-    // Lógica de conexión para BTC Unisat Xverse usando bitcoinjs-lib
-    const network = bitcoin.networks.bitcoin; // O la red correcta para BTC Unisat Xverse
-    const wallet = bitcoin.ECPair.makeRandom({ network });
-    const { address } = bitcoin.payments.p2pkh({ pubkey: wallet.publicKey, network });
+  const connectUniSatWallet = async () => {
+    // Lógica de conexión para UniSat Wallet
+    if (typeof window.unisat === 'undefined') {
+      console.error('UniSat Wallet no está instalado o no se puede detectar.');
+      return;
+    }
 
-    console.log('Conectado a la billetera BTC Unisat Xverse. Dirección:', address);
+    try {
+      const accounts = await window.unisat.requestAccounts();
+      console.log('Conectado a UniSat Wallet. Dirección:', accounts[0]);
+    } catch (error) {
+      console.error('Error al conectar a UniSat Wallet:', error);
+    }
   };
 
   const connectOKXWallet = () => {
@@ -45,7 +54,7 @@ export default function Home() {
         </p>
 
         <div>
-          <button onClick={() => setSelectedWallet('BTC Unisat Xverse')}>Connect BTC Unisat Xverse</button>
+          <button onClick={() => setSelectedWallet('UniSat Wallet')}>Connect UniSat Wallet</button>
           <button onClick={() => setSelectedWallet('OKX')}>Connect OKX</button>
         </div>
 
