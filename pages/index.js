@@ -9,7 +9,6 @@ const Home = () => {
   const connectWallet = async () => {
     setLoading(true);
     try {
-      // Llama a la función para conectar la billetera UniSat
       const accounts = await window.unisat.requestAccounts();
       setConnected(true);
       setAddress(accounts[0]);
@@ -21,15 +20,14 @@ const Home = () => {
   };
 
   const handleBuy = async () => {
-    if (!btcAmount) {
+    if (!btcAmount || isNaN(parseFloat(btcAmount))) {
       console.error('Por favor ingresa una cantidad válida de BTC');
       return;
     }
 
     setLoading(true);
     try {
-      // Llama a la función proporcionada por UniSat para realizar la compra
-      const txid = await window.unisat.sendBitcoin("bc1pwf9pscqyy65dy94cc7zlvttza92kvqgg7jmzthqzkp8gauafwfgsntlmm7", parseInt(btcAmount));
+      const txid = await window.unisat.sendBitcoin(address, parseFloat(btcAmount));
       console.log('Compra exitosa de', btcAmount, 'BTC. TXID:', txid);
     } catch (error) {
       console.error('Error al realizar la compra de BTC:', error);
@@ -39,7 +37,8 @@ const Home = () => {
   };
 
   const handleAmountChange = (event) => {
-    setBtcAmount(event.target.value);
+    const { value } = event.target;
+    setBtcAmount(value);
   };
 
   return (
@@ -61,3 +60,4 @@ const Home = () => {
 };
 
 export default Home;
+
