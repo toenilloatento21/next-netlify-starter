@@ -1,20 +1,18 @@
 /* Corrección de errores de sintaxis en globals.css */
 
-/* Se espera un selector o regla en la primera línea */
-html,
-body {
+/* Establecer el fondo de la web en naranja */
+html, body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: orange;
 }
 
-/* Se espera un bloque de declaración con llave de apertura */
 * {
   box-sizing: border-box;
 }
 
-/* Se espera un selector o regla en la línea 11 */
 main {
   padding: 5rem 0;
   flex: 1;
@@ -24,15 +22,13 @@ main {
   align-items: center;
 }
 
-/* Se espera un selector o regla en la línea 12 */
 code {
-  background: #fdad00;
+  background: #fdad00; /* Cambié el color de fondo a naranja (#fdad00) */
   border-radius: 5px;
   padding: 0.75rem;
   font-family: Menlo, Monaco, Lucida Console, Courier New, monospace;
 }
 
-/* Se espera un selector o regla en la línea 14 */
 .container {
   height: 100vh;
   display: flex;
@@ -41,11 +37,6 @@ code {
   align-items: center;
 }
 
-/* Se espera un selector o regla en la línea 15 */
-/* Si este bloque está vacío, podrías eliminarlo para resolver el error */
-/* Si contiene reglas, asegúrate de que estén dentro de un selector válido */
-
-/* Se espera un bloque de declaración con llave de apertura */
 button {
   background-color: green;
   color: white;
@@ -55,4 +46,3 @@ button {
   cursor: pointer;
   margin: 5px;
 }
-/* Se espera un bloque de declaración con llave de cierre */
