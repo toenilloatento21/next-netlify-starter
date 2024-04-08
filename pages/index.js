@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './index.css'; // Archivo CSS para estilos personalizados
 
 const Home = () => {
   const [connected, setConnected] = useState(false);
@@ -49,25 +50,25 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="main-container">
       {!connected ? (
         <div className="connection-section">
-          <button onClick={connectWallet} disabled={loading}>
+          <button className="connect-button" onClick={connectWallet} disabled={loading}>
             {loading ? 'Conectando...' : 'Conectar UniSat Wallet'}
           </button>
         </div>
       ) : (
         <div className="connected-section">
-          <p>Conectado a UniSat Wallet. Dirección: {address}</p>
+          <p className="connected-info">Conectado a UniSat Wallet. Dirección: <span className="green-text">{address}</span></p>
           <div className="token-info">
             <div className="rune-per-btc">
               <h2>$RUNE por BTC</h2>
               <p>{runePerBtc} $RUNE</p>
             </div>
             <div className="buy-section">
-              <label>Ingrese la cantidad de BTC:</label>
-              <input type="number" value={btcAmount} onChange={handleAmountChange} />
-              <button onClick={handleBuy} disabled={loading}>Comprar</button>
+              <label className="btc-label">Ingrese la cantidad de BTC:</label>
+              <input className="btc-input" type="number" value={btcAmount} onChange={handleAmountChange} />
+              <button className="buy-button" onClick={handleBuy} disabled={loading}>Comprar</button>
             </div>
           </div>
           <div className="purchase-info">

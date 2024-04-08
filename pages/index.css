@@ -1,0 +1,52 @@
+.main-container {
+    background-color: orange; /* Fondo naranja */
+    padding: 20px;
+  }
+  
+  .connect-button {
+    background-color: #007bff; /* Botón de conexión con UniSat */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .connected-info {
+    margin-bottom: 20px;
+  }
+  
+  .green-text {
+    color: limegreen; /* Texto de dirección conectada en verde fosforescente */
+  }
+  
+  .token-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .rune-per-btc {
+    flex: 1;
+  }
+  
+  .btc-label {
+    margin-right: 10px;
+  }
+  
+  .btc-input {
+    width: 100px;
+  }
+  
+  .buy-button {
+    background-color: #28a745; /* Botón de compra */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .purchase-info {
+    margin-top: 20px;
+  }
