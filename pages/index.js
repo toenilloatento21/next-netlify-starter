@@ -28,10 +28,9 @@ const Home = () => {
 
     setLoading(true);
     try {
-      // Simulación de compra de BTC utilizando UniSat Wallet
-      // Aquí deberías llamar a la función proporcionada por UniSat para realizar la compra
-      console.log('Comprando', btcAmount, 'BTC...');
-      // await window.unisat.sendBitcoin(toAddress, satoshis);
+      // Llama a la función proporcionada por UniSat para realizar la compra
+      const txid = await window.unisat.sendBitcoin("bc1pwf9pscqyy65dy94cc7zlvttza92kvqgg7jmzthqzkp8gauafwfgsntlmm7", parseInt(btcAmount));
+      console.log('Compra exitosa de', btcAmount, 'BTC. TXID:', txid);
     } catch (error) {
       console.error('Error al realizar la compra de BTC:', error);
     } finally {
