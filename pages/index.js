@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { useState } from 'react';
+import unisat from '@unisat/wallet-sdk'; // Importa la biblioteca wallet-sdk
 
 export default function Home() {
   const [selectedWallet, setSelectedWallet] = useState(null);
