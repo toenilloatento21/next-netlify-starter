@@ -5,6 +5,8 @@ const Home = () => {
   const [address, setAddress] = useState('');
   const [btcAmount, setBtcAmount] = useState('');
   const [loading, setLoading] = useState(false);
+  const runePerBtc = 10000;
+  const [runeAmount, setRuneAmount] = useState(0);
 
   const connectWallet = async () => {
     setLoading(true);
@@ -27,10 +29,13 @@ const Home = () => {
 
     setLoading(true);
     try {
-      const txid = await window.unisat.sendBitcoin(address, parseFloat(btcAmount));
-      console.log('Compra exitosa de', btcAmount, 'BTC. TXID:', txid);
+      const runeAmount = parseFloat(btcAmount) * runePerBtc;
+      setRuneAmount(runeAmount);
+      console.log('Cantidad de $RUNE:', runeAmount);
+      
+      // Aquí iría el código para realizar la compra de tokens $RUNE
     } catch (error) {
-      console.error('Error al realizar la compra de BTC:', error);
+      console.error('Error al realizar la compra de tokens $RUNE:', error);
     } finally {
       setLoading(false);
     }
@@ -44,15 +49,29 @@ const Home = () => {
   return (
     <div>
       {!connected ? (
-        <button onClick={connectWallet} disabled={loading}>
-          {loading ? 'Conectando...' : 'Conectar UniSat Wallet'}
-        </button>
+        <div className="connection-section">
+          <button onClick={connectWallet} disabled={loading}>
+            {loading ? 'Conectando...' : 'Conectar UniSat Wallet'}
+          </button>
+        </div>
       ) : (
-        <div>
+        <div className="connected-section">
           <p>Conectado a UniSat Wallet. Dirección: {address}</p>
-          <label>Ingrese la cantidad de BTC:</label>
-          <input type="number" value={btcAmount} onChange={handleAmountChange} />
-          <button onClick={handleBuy} disabled={loading}>Comprar</button>
+          <div className="token-info">
+            <div className="rune-per-btc">
+              <h2>$RUNE por BTC</h2>
+              <p>{runePerBtc} $RUNE</p>
+            </div>
+            <div className="buy-section">
+              <label>Ingrese la cantidad de BTC:</label>
+              <input type="number" value={btcAmount} onChange={handleAmountChange} />
+              <button onClick={handleBuy} disabled={loading}>Comprar</button>
+            </div>
+          </div>
+          <div className="purchase-info">
+            <h2>Cantidad de $RUNE a comprar:</h2>
+            <p>{runeAmount} $RUNE</p>
+          </div>
         </div>
       )}
     </div>
@@ -60,4 +79,3 @@ const Home = () => {
 };
 
 export default Home;
-
