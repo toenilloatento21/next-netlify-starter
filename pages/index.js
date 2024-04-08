@@ -50,15 +50,15 @@ const Home = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       {!connected ? (
-        <div className="connection-section">
+        <div className="connection-section" style={{ textAlign: 'center' }}>
           <button className="connect-button" onClick={connectWallet} disabled={loading}>
             {loading ? 'Conectando...' : 'Conectar UniSat Wallet'}
           </button>
         </div>
       ) : (
-        <div className="connected-section">
+        <div className="connected-section" style={{ textAlign: 'center' }}>
           <p className="connected-info">Conectado a UniSat Wallet. Dirección: <span className="green-text">{address}</span></p>
           <div className="token-info">
             <div className="rune-per-btc">
