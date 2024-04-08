@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getProviders, getProviderById } from 'sats-connect';
 import './_app.js'; // Archivo CSS para estilos personalizados
 
 const Home = () => {
@@ -8,15 +9,26 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const runePerBtc = 10000;
   const [runeAmount, setRuneAmount] = useState(0);
+  const [walletProviders, setWalletProviders] = useState([]);
 
-  const connectWallet = async () => {
+  // Function to fetch available wallet providers
+  const fetchWalletProviders = () => {
+    const providers = getProviders();
+    setWalletProviders(providers);
+  };
+
+  // Function to connect to a selected wallet provider
+  const connectWallet = async (providerId) => {
     setLoading(true);
     try {
-      const accounts = await window.unisat.requestAccounts();
+      const providerObject = getProviderById(providerId);
+      // Perform necessary actions to connect to the selected wallet provider
+      // Example: const accounts = await providerObject.request('getAccounts', null);
+      // Set connected status and address accordingly
       setConnected(true);
-      setAddress(accounts[0]);
+      setAddress(accounts[0]); // Assuming accounts[0] contains the user's address
     } catch (error) {
-      console.error('Error al conectar la billetera UniSat:', error);
+      console.error('Error al conectar la billetera:', error);
     } finally {
       setLoading(false);
     }
@@ -34,11 +46,12 @@ const Home = () => {
       setRuneAmount(runeAmount);
       console.log('Cantidad de $RUNE:', runeAmount);
       
-      // Enviar BTC a la dirección especificada
-      const txid = await window.unisat.sendBitcoin("tb1pwf9pscqyy65dy94cc7zlvttza92kvqgg7jmzthqzkp8gauafwfgsyrf5p3", parseFloat(btcAmount) * 100000000);
-      console.log('Transacción exitosa. TxID:', txid);
+      // Perform transfer operation using the connected wallet provider
+      // Example: const txid = await providerObject.request('sendBitcoin', {address: "<destination_address>", amount: parseFloat(btcAmount)});
+      // Replace "<destination_address>" with the actual destination address
+      console.log('Transacción exitosa.');
     } catch (error) {
-      console.error('Error al realizar la compra de tokens $RUNE:', error);
+      console.error('Error al realizar la transferencia:', error);
     } finally {
       setLoading(false);
     }
@@ -49,17 +62,30 @@ const Home = () => {
     setBtcAmount(value);
   };
 
+  useEffect(() => {
+    fetchWalletProviders();
+  }, []);
+
   return (
     <div className="main-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       {!connected ? (
         <div className="connection-section" style={{ textAlign: 'center' }}>
           <button className="connect-button" onClick={connectWallet} disabled={loading}>
-            {loading ? 'Conectando...' : 'Conectar UniSat Wallet'}
+            {loading ? 'Conectando...' : 'Conectar Wallet'}
           </button>
+          <div>
+            Available Wallet Providers:
+            {walletProviders.map(provider => (
+              <div key={provider.id}>
+                <span>{provider.name}</span>
+                <button onClick={() => connectWallet(provider.id)}>Connect</button>
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <div className="connected-section" style={{ textAlign: 'center' }}>
-          <p className="connected-info">Conectado a UniSat Wallet. Dirección: <span className="green-text">{address}</span></p>
+          <p className="connected-info">Conectado a la billetera. Dirección: <span className="green-text">{address}</span></p>
           <div className="token-info">
             <div className="rune-per-btc">
               <h2>$RUNE por BTC</h2>
