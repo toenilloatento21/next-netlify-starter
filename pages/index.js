@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './index.css'; // Archivo CSS para estilos personalizados
+import './_app.js'; // Archivo CSS para estilos personalizados
 
 const Home = () => {
   const [connected, setConnected] = useState(false);
